@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rental Property Owner Questionnaire</title>
+<style>
+  :root {
+    --accent: #1a5276;
+    --accent-light: #eaf2f8;
+    --text: #222;
+    --muted: #666;
+    --border: #d5dbe0;
+    --error: #c0392b;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text);
+    background: #fff;
+    margin: 0;
+    padding: 0;
+  }
+  .form-wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 32px 20px 60px;
+  }
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 4px;
+    color: var(--accent);
+  }
+  .intro {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 28px;
+  }
+  fieldset {
+    border: none;
+    padding: 0;
+    margin: 0 0 24px;
+  }
+  .section-label {
+    font-weight: 600;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    margin: 32px 0 12px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 6px;
+  }
+  label.q {
+    display: block;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+  }
+  .field { margin-bottom: 20px; }
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-family: inherit;
+    color: var(--text);
+    background: #fff;
+  }
+  textarea { min-height: 80px; resize: vertical; }
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-light);
+  }
+  .choice-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; font-size: 0.92rem; }
+  .choice-row input { margin-top: 3px; }
+  .other-input { margin-top: 8px; max-width: 320px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 480px) { .two-col { grid-template-columns: 1fr; } }
+  .required { color: var(--error); }
+  .submit-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 13px 28px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+  }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+  .submit-btn:hover:not(:disabled) { background: #154360; }
+  .status-msg {
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    display: none;
+  }
+  .status-msg.error { display: block; background: #fdecea; color: var(--error); }
+  .status-msg.success { display: block; background: #eafaf1; color: #1e8449; }
+  .success-panel { text-align: center; padding: 40px 20px; }
+  .success-panel h2 { color: var(--accent); }
+  /* honeypot */
+  .hp-field { position: absolute; left: -9999px; top: -9999px; }
+</style>
+</head>
+<body>
+<div class="form-wrap">
+
+  <form id="ownerForm">
+    <h1>Rental Property Owner Questionnaire</h1>
+    <p class="intro">Thank you for taking a few minutes to share your experience. We're learning more about what local rental property owners are experiencing&mdash;the good, the bad, and everything in between.</p>
+
+    <div class="section-label">Your Contact Info</div>
+
+    <div class="two-col">
+      <div class="field">
+        <label class="q" for="fullName">Full Name <span class="required">*</span></label>
+        <input type="text" id="fullName" name="fullName" required autocomplete="name">
+      </div>
+      <div class="field">
+        <label class="q" for="phone">Phone <span class="required">*</span></label>
+        <input type="tel" id="phone" name="phone" required autocomplete="tel">
+      </div>
+    </div>
+    <div class="field">
+      <label class="q" for="email">Email <span class="required">*</span></label>
+      <input type="email" id="email" name="email" required autocomplete="email">
+    </div>
+
+    <!-- honeypot -->
+    <div class="hp-field" aria-hidden="true">
+      <label for="website">Website</label>
+      <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+    </div>
+
+    <div class="section-label">Your Experience</div>
+
+    <div class="field">
+      <label class="q" for="q1">1. How many rental properties do you currently own, and how long have you been a rental property owner?</label>
+      <textarea id="q1" name="q1"></textarea>
+    </div>
+
+    <div class="field">
+      <label class="q" for="q2">2. What made you decide to rent this property rather than sell it?</label>
+      <textarea id="q2" name="q2"></textarea>
+    </div>
+
+    <div class="field">
+      <label class="q">3. What is your main goal for this property?</label>
+      <div id="q3-options">
+        <div class="choice-row"><input type="radio" name="q3" value="Consistent monthly income" id="q3a"><label for="q3a">Consistent monthly income</label></div>
+        <div class="choice-row"><input type="radio" name="q3" value="Long-term appreciation" id="q3b"><label for="q3b">Long-term appreciation</label></div>
+        <div class="choice-row"><input type="radio" name="q3" value="Paying down the mortgage" id="q3c"><label for="q3c">Paying down the mortgage</label></div>
+        <div class="choice-row"><input type="radio" name="q3" value="Building a larger rental portfolio" id="q3d"><label for="q3d">Building a larger rental portfolio</label></div>
+        <div class="choice-row"><input type="radio" name="q3" value="Keeping the property for future use" id="q3e"><label for="q3e">Keeping the property for future use</label></div>
+        <div class="choice-row"><input type="radio" name="q3" value="Other" id="q3f"><label for="q3f">Other</label></div>
+      </div>
+      <input type="text" class="other-input" id="q3Other" placeholder="Please specify" style="display:none;">
+    </div>
+
+    <div class="field">
+      <label class="q" for="q4">4. What has gone well for you as a rental property owner?</label>
+      <textarea id="q4" name="q4"></textarea>
+    </div>
+
+    <div class="field">
+      <label class="q" for="q5">5. What has been the most frustrating or difficult part of owning a rental?</label>
+      <textarea id="q5" name="q5"></textarea>
+    </div>
+
+    <div class="field">
+      <label class="q">6. Have you ever experienced any of the following?</label>
+      <div class="choice-row"><input type="checkbox" name="q6" value="Trouble finding a qualified tenant" id="q6a"><label for="q6a">Trouble finding a qualified tenant</label></div>
+      <div class="choice-row"><input type="checkbox" name="q6" value="Tenant not paying rent" id="q6b"><label for="q6b">Tenant not paying rent</label></div>
+      <div class="choice-row"><input type="checkbox" name="q6" value="Property damage" id="q6c"><label for="q6c">Property damage</label></div>
+      <div class="choice-row"><input type="checkbox" name="q6" value="Difficult communication with tenants" id="q6d"><label for="q6d">Difficult communication with tenants</label></div>
+      <div class="choice-row"><input type="checkbox" name="q6" value="Maintenance issues" id="q6e"><label for="q6e">Maintenance issues</label></div>
+      <div class="choice-row"><input type="checkbox" name="q6" value="Long vacancy periods" id="q6f"><label for="q6f">Long vacancy periods</label></div>
+      <div class="choice-row"><input type="checkbox" name="q6" value="Eviction" id="q6g"><label for="q6g">Eviction</label></div>
+      <div class="choice-row"><input type="checkbox" name="q6" value="Fraudulent or misleading applications" id="q6h"><label for="q6h">Fraudulent or misleading applications</label></div>
+      <div class="choice-row"><input type="checkbox" name="q6" value="None of the above" id="q6i"><label for="q6i">None of the above</label></div>
+    </div>
+
+    <div class="field">
+      <label class="q" for="q7">7. How do you currently market your property, find tenants, and screen applicants?</label>
+      <textarea id="q7" name="q7"></textarea>
+    </div>
+
+    <div class="field">
+      <label class="q" for="q8">8. Once a tenant moves in, what part of managing the property takes the most time or causes the most stress?</label>
+      <textarea id="q8" name="q8"></textarea>
+    </div>
+
+    <div class="field">
+      <label class="q">9. Do you plan to purchase additional rental properties in the future?</label>
+      <div class="choice-row"><input type="radio" name="q9" value="Yes" id="q9a"><label for="q9a">Yes</label></div>
+      <div class="choice-row"><input type="radio" name="q9" value="No" id="q9b"><label for="q9b">No</label></div>
+      <div class="choice-row"><input type="radio" name="q9" value="Not sure" id="q9c"><label for="q9c">Not sure</label></div>
+    </div>
+
+    <div class="field">
+      <label class="q" for="q10">10. If you could change one thing about your experience as a rental property owner&mdash;or make one part of it easier&mdash;what would it be?</label>
+      <textarea id="q10" name="q10"></textarea>
+    </div>
+
+    <button type="submit" class="submit-btn" id="submitBtn">Submit Questionnaire</button>
+    <div class="status-msg" id="statusMsg"></div>
+  </form>
+
+  <div class="success-panel" id="successPanel" style="display:none;">
+    <h2>Thank you!</h2>
+    <p>Your responses have been received. We appreciate you taking the time to share your experience.</p>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  // Relative path — works automatically because the function is hosted
+  // on the same Netlify site as this page. No need to edit this.
+  var ENDPOINT_URL = "/submit";
+
+  var form = document.getElementById("ownerForm");
+  var submitBtn = document.getElementById("submitBtn");
+  var statusMsg = document.getElementById("statusMsg");
+  var successPanel = document.getElementById("successPanel");
+
+  // Show/hide "Other" text field for Q3
+  document.querySelectorAll('input[name="q3"]').forEach(function (radio) {
+    radio.addEventListener("change", function () {
+      var otherBox = document.getElementById("q3Other");
+      otherBox.style.display = (radio.value === "Other" && radio.checked) ? "block" : "none";
+    });
+  });
+
+  function getCheckedValues(name) {
+    return Array.prototype.slice
+      .call(document.querySelectorAll('input[name="' + name + '"]:checked'))
+      .map(function (el) { return el.value; });
+  }
+
+  function getRadioValue(name) {
+    var el = document.querySelector('input[name="' + name + '"]:checked');
+    return el ? el.value : "";
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    statusMsg.className = "status-msg";
+    statusMsg.textContent = "";
+
+    // Honeypot check — bots tend to fill every field
+    if (document.getElementById("website").value) {
+      // Silently pretend success to the bot
+      form.style.display = "none";
+      successPanel.style.display = "block";
+      return;
+    }
+
+    var q3Value = getRadioValue("q3");
+    if (q3Value === "Other") {
+      var otherText = document.getElementById("q3Other").value.trim();
+      if (otherText) q3Value = "Other: " + otherText;
+    }
+
+    var payload = {
+      fullName: document.getElementById("fullName").value.trim(),
+      email: document.getElementById("email").value.trim(),
+      phone: document.getElementById("phone").value.trim(),
+      answers: {
+        q1_propertiesAndTenure: document.getElementById("q1").value.trim(),
+        q2_whyRentVsSell: document.getElementById("q2").value.trim(),
+        q3_mainGoal: q3Value,
+        q4_whatWentWell: document.getElementById("q4").value.trim(),
+        q5_mostFrustrating: document.getElementById("q5").value.trim(),
+        q6_experiencedIssues: getCheckedValues("q6"),
+        q7_marketingAndScreening: document.getElementById("q7").value.trim(),
+        q8_biggestTimeStressor: document.getElementById("q8").value.trim(),
+        q9_planToBuyMore: getRadioValue("q9"),
+        q10_oneThingToChange: document.getElementById("q10").value.trim()
+      },
+      submittedAt: new Date().toISOString(),
+      sourcePage: window.location.href
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Submitting...";
+
+    fetch(ENDPOINT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error("Request failed: " + res.status);
+        return res.json().catch(function () { return {}; });
+      })
+      .then(function () {
+        form.style.display = "none";
+        successPanel.style.display = "block";
+      })
+      .catch(function (err) {
+        statusMsg.className = "status-msg error";
+        statusMsg.textContent = "Something went wrong submitting the form. Please try again in a moment.";
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit Questionnaire";
+        console.error(err);
+      });
+  });
+})();
+</script>
+
+</body>
+</html>
