@@ -67,6 +67,7 @@ exports.handler = async function (event) {
 
   const cardPayload = {
     name: fullName,
+    stage: "Contact Made",
     tHsjQDTdS7z7B7ekX: [email],
     description: buildDescriptionHtml(answers, email, phone, payload.submittedAt, payload.sourcePage)
   };
